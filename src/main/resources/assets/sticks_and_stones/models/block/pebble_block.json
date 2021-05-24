@@ -1,0 +1,31 @@
+{
+  "textures": {
+    "particle": "sticks_and_stones:item/pebble_block",
+    "texture": "sticks_and_stones:item/pebble_block"
+  },
+  "elements": [
+    {
+      "from": [
+        4,
+        0,
+        4
+      ],
+      "to": [
+        12,
+        0.01,
+        12
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": "#texture"
+        }
+      }
+    }
+  ]
+}

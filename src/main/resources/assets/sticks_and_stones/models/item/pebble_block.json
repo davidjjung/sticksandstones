@@ -1,0 +1,6 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "sticks_and_stones:item/pebble_block"
+  }
+}
