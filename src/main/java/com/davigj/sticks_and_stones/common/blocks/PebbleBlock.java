@@ -11,6 +11,7 @@ import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.state.BooleanProperty;
+import net.minecraft.state.IntegerProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.*;
@@ -26,13 +27,18 @@ import net.minecraft.world.World;
 import javax.annotation.Nonnull;
 
 public class PebbleBlock extends Block implements IWaterLoggable {
-
+    public static final IntegerProperty PEBBLES = BlockStateProperties.PICKLES_1_4;
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
+    protected static final VoxelShape ONE_SHAPE = Block.makeCuboidShape(6.0D, 0.0D, 6.0D, 10.0D, 6.0D, 10.0D);
+    protected static final VoxelShape TWO_SHAPE = Block.makeCuboidShape(3.0D, 0.0D, 3.0D, 13.0D, 6.0D, 13.0D);
+    protected static final VoxelShape THREE_SHAPE = Block.makeCuboidShape(2.0D, 0.0D, 2.0D, 14.0D, 6.0D, 14.0D);
+    protected static final VoxelShape FOUR_SHAPE = Block.makeCuboidShape(2.0D, 0.0D, 2.0D, 14.0D, 7.0D, 14.0D);
     protected static final VoxelShape SHAPE = Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 1.0D, 16.0D);
 
     public PebbleBlock(Properties properties) {
         super(properties);
-        this.setDefaultState(this.stateContainer.getBaseState().with(WATERLOGGED, Boolean.FALSE));
+        this.setDefaultState(this.stateContainer.getBaseState().with(PEBBLES, Integer.valueOf(1)).with(WATERLOGGED, Boolean.valueOf(false)));
+//        this.setDefaultState(this.stateContainer.getBaseState().with(WATERLOGGED, Boolean.FALSE));
     }
 
     @Override
