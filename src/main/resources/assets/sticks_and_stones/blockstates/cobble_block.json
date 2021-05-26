@@ -1,0 +1,21 @@
+{
+  "variants": {
+    "": [
+      {
+        "model": "sticks_and_stones:block/cobble_block"
+      },
+      {
+        "model": "sticks_and_stones:block/cobble_block",
+        "y": 90
+      },
+      {
+        "model": "sticks_and_stones:block/cobble_block",
+        "y": 180
+      },
+      {
+        "model": "sticks_and_stones:block/cobble_block",
+        "y": 270
+      }
+    ]
+  }
+}

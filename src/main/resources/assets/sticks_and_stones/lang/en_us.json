@@ -1,3 +1,5 @@
 {
-  "block.sticks_and_stones.pebble_block": "Pebble"
+  "block.sticks_and_stones.pebble_block": "Pebble",
+  "block.sticks_and_stones.cobble_block": "Cobble"
+
 }

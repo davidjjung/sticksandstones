@@ -4,6 +4,7 @@ import com.davigj.sticks_and_stones.core.registry.SticksAndStonesBlocks;
 import com.davigj.sticks_and_stones.core.registry.SticksAndStonesItems;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.IWaterLoggable;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
@@ -21,6 +22,7 @@ import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.IBlockReader;
+import net.minecraft.world.IWorld;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 
@@ -33,7 +35,7 @@ public class PebbleBlock extends Block implements IWaterLoggable {
     protected static final VoxelShape TWO_SHAPE = Block.makeCuboidShape(3.0D, 0.0D, 3.0D, 13.0D, 6.0D, 13.0D);
     protected static final VoxelShape THREE_SHAPE = Block.makeCuboidShape(2.0D, 0.0D, 2.0D, 14.0D, 6.0D, 14.0D);
     protected static final VoxelShape FOUR_SHAPE = Block.makeCuboidShape(2.0D, 0.0D, 2.0D, 14.0D, 7.0D, 14.0D);
-    protected static final VoxelShape SHAPE = Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 1.0D, 16.0D);
+//    protected static final VoxelShape SHAPE = Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 1.0D, 16.0D);
 
     public PebbleBlock(Properties properties) {
         super(properties);
@@ -46,17 +48,21 @@ public class PebbleBlock extends Block implements IWaterLoggable {
         return hasEnoughSolidSide(worldIn, pos.down(), Direction.UP);
     }
 
-    @Override
-    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
-        builder.add(WATERLOGGED);
+    protected boolean isValidGround(BlockState state, IBlockReader worldIn, BlockPos pos) {
+        return !state.getCollisionShape(worldIn, pos).project(Direction.UP).isEmpty() || state.isSolidSide(worldIn, pos, Direction.UP);
     }
 
     @Override
-    @Nonnull
-    public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-        Vector3d offset = state.getOffset(worldIn, pos);
-        return SHAPE.withOffset(offset.x, offset.y, offset.z);
+    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+        builder.add(PEBBLES, WATERLOGGED);
     }
+
+//    @Override
+//    @Nonnull
+//    public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+//        Vector3d offset = state.getOffset(worldIn, pos);
+//        return SHAPE.withOffset(offset.x, offset.y, offset.z);
+//    }
 
     @Override
     public void neighborChanged(BlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos,
@@ -92,5 +98,31 @@ public class PebbleBlock extends Block implements IWaterLoggable {
             return ActionResultType.SUCCESS;
         }
         return ActionResultType.PASS;
+    }
+
+    public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+        switch(state.get(PEBBLES)) {
+            case 1:
+            default:
+                return ONE_SHAPE;
+            case 2:
+                return TWO_SHAPE;
+            case 3:
+                return THREE_SHAPE;
+            case 4:
+                return FOUR_SHAPE;
+        }
+    }
+
+    public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn, BlockPos currentPos, BlockPos facingPos) {
+        if (!stateIn.isValidPosition(worldIn, currentPos)) {
+            return Blocks.AIR.getDefaultState();
+        } else {
+            if (stateIn.get(WATERLOGGED)) {
+                worldIn.getPendingFluidTicks().scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickRate(worldIn));
+            }
+
+            return super.updatePostPlacement(stateIn, facing, facingState, worldIn, currentPos, facingPos);
+        }
     }
 }
