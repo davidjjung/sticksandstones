@@ -1,5 +1,6 @@
 {
   "block.sticks_and_stones.pebble_block": "Pebble",
-  "block.sticks_and_stones.cobble_block": "Cobble"
+  "block.sticks_and_stones.cobble_block": "Cobble",
+  "item.sticks_and_stones.stone_shovel_head": "Stone Shovel Head"
 
 }

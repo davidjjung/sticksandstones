@@ -17,4 +17,7 @@ public class SticksAndStonesItems {
 
 	public static final RegistryObject<Item> COBBLE_BLOCK = HELPER.createItem("cobble_block", () -> new BlockItem(
 			SticksAndStonesBlocks.COBBLE_BLOCK.get(), new Item.Properties().group(ItemGroup.DECORATIONS)));
+
+	public static final RegistryObject<Item> STONE_SHOVEL_HEAD = HELPER.createItem("stone_shovel_head", () -> new Item(
+			new Item.Properties().group(ItemGroup.TOOLS)));
 }

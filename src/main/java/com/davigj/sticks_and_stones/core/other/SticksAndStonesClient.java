@@ -7,5 +7,7 @@ import net.minecraft.client.renderer.RenderTypeLookup;
 public class SticksAndStonesClient {
     public static void registerRenderLayers() {
         RenderTypeLookup.setRenderLayer(SticksAndStonesBlocks.PEBBLE_BLOCK.get(), RenderType.getCutout());
+        RenderTypeLookup.setRenderLayer(SticksAndStonesBlocks.COBBLE_BLOCK.get(), RenderType.getCutout());
+
     }
 }
